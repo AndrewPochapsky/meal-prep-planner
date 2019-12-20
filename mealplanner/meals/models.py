@@ -8,3 +8,6 @@ class Step(models.Model):
     step_number = models.IntegerField()
     description = models.CharField(max_length=500)
     
+    class Meta:
+        ordering = ['step_number']
+
