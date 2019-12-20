@@ -10,14 +10,3 @@ class MealViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = MealSerializer
 
-"""
-class StepViewSet(viewsets.ModelViewSet):
-    queryset = Step.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = StepSerializer
-
-"""
-
-

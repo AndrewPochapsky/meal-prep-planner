@@ -3,14 +3,7 @@ from meals.models import Meal, Step
 
 # Meal Serializer
 class MealSerializer(serializers.ModelSerializer):
-    steps  = serializers.StringRelatedField(many=True)
+    steps  = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Meal
         fields = ['name', 'steps']
-"""
-# Step Serializer
-class StepSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Step
-        fields = '__all__'
-"""

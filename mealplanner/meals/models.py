@@ -8,10 +8,3 @@ class Step(models.Model):
     step_number = models.IntegerField()
     description = models.CharField(max_length=500)
     
-    class Meta:
-        unique_together = ['meal', 'step_number']
-        ordering = ['step_number']
-
-    def __str__(self):
-        return '%d: %s' % (self.step_number, self.description)
-
