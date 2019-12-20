@@ -7,3 +7,9 @@ class MealSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meal
         fields = ['name', 'steps']
+
+# Step Serializer
+class StepSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Step 
+        fields = '__all__' 
