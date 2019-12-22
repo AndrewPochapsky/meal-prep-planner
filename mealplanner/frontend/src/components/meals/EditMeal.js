@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateMeal } from "../../actions/meals";
 import { toggleEditing } from "../../actions/states";
+import Step from "./Step";
 
 export class EditMeal extends Component {
   static propTypes = {
@@ -15,7 +16,8 @@ export class EditMeal extends Component {
     id: -1,
     name: "",
     description: "",
-    preparation_time: 0
+    preparation_time: 0,
+    steps: []
   };
 
   componentDidMount() {
@@ -86,7 +88,12 @@ export class EditMeal extends Component {
           </div>
         </Fragment>
         <Fragment>
-          <button onClick={this.onSubmit} className="btn btn-primary">
+          {this.state.steps.map(step => (
+            <Step key={step.id} step={step} isEditMeal={true} />
+          ))}
+        </Fragment>
+        <Fragment>
+          <button onClick={this.onSubmit} className="btn btn-success">
             {" "}
             Save{" "}
           </button>
