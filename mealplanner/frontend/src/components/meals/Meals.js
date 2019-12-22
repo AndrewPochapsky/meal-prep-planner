@@ -23,7 +23,8 @@ export class Meals extends Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Steps</th>
+              <th>Description</th>
+              <th>Preparation Time</th>
               <th />
             </tr>
           </thead>
@@ -32,7 +33,8 @@ export class Meals extends Component {
               <tr key={meal.id}>
                 <td>{meal.id}</td>
                 <td>{meal.name}</td>
-                <td>{meal.steps.length}</td>
+                <td>{meal.description}</td>
+                <td>{meal.preparation_time}</td>
                 <td>
                   <button
                     onClick={this.props.deleteMeal.bind(this, meal.id)}

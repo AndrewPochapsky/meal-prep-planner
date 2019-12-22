@@ -14,4 +14,4 @@ class MealSerializer(serializers.ModelSerializer):
     steps = StepSerializer(many=True, read_only=True)
     class Meta:
         model = Meal
-        fields = ['id', 'name', 'steps']
+        fields = ['id', 'name', 'description', 'preparation_time', 'steps']
