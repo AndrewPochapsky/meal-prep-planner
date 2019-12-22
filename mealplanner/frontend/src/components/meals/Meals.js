@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getMeals, deleteMeal } from "../../actions/meals";
+import Meal from "./Meal";
 
 export class Meals extends Component {
   static propTypes = {
@@ -18,35 +19,11 @@ export class Meals extends Component {
     return (
       <Fragment>
         <h2>Meals</h2>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Preparation Time</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.meals.map(meal => (
-              <tr key={meal.id}>
-                <td>{meal.id}</td>
-                <td>{meal.name}</td>
-                <td>{meal.description}</td>
-                <td>{meal.preparation_time}</td>
-                <td>
-                  <button
-                    onClick={this.props.deleteMeal.bind(this, meal.id)}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="row container">
+          {this.props.meals.map(meal => (
+            <Meal key={meal.id} meal={meal} />
+          ))}
+        </div>
       </Fragment>
     );
   }
