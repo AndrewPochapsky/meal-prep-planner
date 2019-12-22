@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import ReactDOM from "react-dom";
 import Header from "./layout/Header";
 import Dashboard from "./meals/Dashboard";
@@ -9,12 +10,19 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Fragment>
+        <Router>
           <Header />
-          <div className="container">
-            <Dashboard />
-          </div>
-        </Fragment>
+          <Route
+            path="/"
+            render={props => (
+              <Fragment>
+                <div className="container">
+                  <Dashboard />
+                </div>
+              </Fragment>
+            )}
+          />
+        </Router>
       </Provider>
     );
   }
