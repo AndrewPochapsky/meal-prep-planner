@@ -7,12 +7,14 @@ import Meal from "./Meal";
 export class Meals extends Component {
   static propTypes = {
     meals: PropTypes.array.isRequired,
-    getMeals: PropTypes.func.isRequired,
-    deleteMeal: PropTypes.func.isRequired
+    mealsLoaded: PropTypes.bool.isRequired,
+    getMeals: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    this.props.getMeals();
+    if (!this.props.mealsLoaded) {
+      this.props.getMeals();
+    }
   }
 
   render() {
@@ -30,7 +32,8 @@ export class Meals extends Component {
 }
 
 const mapStateToProps = state => ({
-  meals: state.meals.meals
+  meals: state.meals.meals,
+  mealsLoaded: state.states.mealsLoaded
 });
 
-export default connect(mapStateToProps, { getMeals, deleteMeal })(Meals);
+export default connect(mapStateToProps, { getMeals })(Meals);

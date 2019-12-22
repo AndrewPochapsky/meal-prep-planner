@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_MEALS, DELETE_MEAL, ADD_MEAL } from "./types";
+import { GET_MEALS, DELETE_MEAL, ADD_MEAL, UPDATE_MEAL } from "./types";
 
 // GET MEALS
 export const getMeals = () => dispatch => {
@@ -38,6 +38,21 @@ export const addMeal = meal => dispatch => {
     .then(res => {
       dispatch({
         type: ADD_MEAL,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+// UPDATE  MEAL
+export const updateMeal = meal => dispatch => {
+  axios
+    .put(`/api/meals/${meal.id}/`, meal)
+    .then(res => {
+      dispatch({
+        type: UPDATE_MEAL,
         payload: res.data
       });
     })

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { deleteMeal } from "../../actions/meals";
+import { toggleEditing } from "../../actions/states";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 export class Meal extends Component {
   static propTypes = {
     meal: PropTypes.object.isRequired,
-    deleteMeal: PropTypes.func.isRequired
+    deleteMeal: PropTypes.func.isRequired,
+    toggleEditing: PropTypes.func.isRequired
   };
 
   render() {
@@ -19,7 +21,12 @@ export class Meal extends Component {
           <p className="card-text">{description}</p>
           <div className="btn-toolbar mt-auto">
             <div className="button-group">
-              <button className="btn btn-primary btn-sm">Edit</button>
+              <button
+                onClick={this.props.toggleEditing.bind(this, this.props.meal)}
+                className="btn btn-primary btn-sm"
+              >
+                Edit
+              </button>
             </div>
             <div className="button-group">
               <button
@@ -35,4 +42,4 @@ export class Meal extends Component {
     );
   }
 }
-export default connect(null, { deleteMeal })(Meal);
+export default connect(null, { deleteMeal, toggleEditing })(Meal);

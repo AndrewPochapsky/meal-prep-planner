@@ -1,6 +1,6 @@
 from meals.models import Meal, Step
 from rest_framework import viewsets, permissions
-from .serializers import MealSerializer, StepSerializer 
+from .serializers import MealSerializer, StepSerializer
 
 # Meal viewset
 class MealViewSet(viewsets.ModelViewSet):
@@ -9,7 +9,6 @@ class MealViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = MealSerializer
-
 
 class StepViewSet(viewsets.ModelViewSet):
     queryset = Step.objects.all()

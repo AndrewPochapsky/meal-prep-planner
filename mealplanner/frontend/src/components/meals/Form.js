@@ -7,7 +7,7 @@ export class Form extends Component {
   state = {
     name: "",
     description: "",
-    preparation_time: 0
+    preparation_time: ""
   };
 
   static propTypes = {
@@ -19,7 +19,7 @@ export class Form extends Component {
   onSubmit = e => {
     e.preventDefault();
     this.props.addMeal(this.state);
-    this.setState({ name: "" });
+    this.setState({ name: "", description: "", preparation_time: "" });
   };
 
   render() {
