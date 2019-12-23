@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_MEALS, DELETE_MEAL, ADD_MEAL, UPDATE_MEAL } from "./types";
+import {
+  GET_MEALS,
+  DELETE_MEAL,
+  ADD_MEAL,
+  UPDATE_MEAL,
+  UPDATE_STEP
+} from "./types";
 
 // GET MEALS
 export const getMeals = () => dispatch => {
@@ -59,4 +65,17 @@ export const updateMeal = meal => dispatch => {
     .catch(err => {
       console.log(err);
     });
+};
+
+// UPDATE STEP
+export const updateStep = step => dispatch => {
+  axios
+    .put(`/api/steps/${step.id}/`, step)
+    .then(res => {
+      dispatch({
+        type: UPDATE_STEP,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
 };
