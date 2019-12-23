@@ -83,6 +83,7 @@ export const deleteStep = step => dispatch => {
       console.log(err);
     });
 };
+
 // UPDATE STEP
 export const updateStep = step => dispatch => {
   axios

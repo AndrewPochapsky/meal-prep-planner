@@ -41,12 +41,12 @@ export class EditMeal extends Component {
     this.props.toggleEditing({});
   };
 
-  onAddStep = e => {
+  onAddStep = step_number => {
     this.props.addStep({
       title: "a",
       description: "adf",
       meal: this.state.id,
-      step_number: 5
+      step_number: step_number + 1
     });
   };
 
@@ -95,7 +95,10 @@ export class EditMeal extends Component {
           {this.props.steps.map(step => (
             <div key={step.id}>
               <Step step={step} isEditMeal={true} />
-              <button onClick={this.onAddStep} className="btn btn-outline-dark">
+              <button
+                onClick={() => this.onAddStep(step.step_number)}
+                className="btn btn-outline-dark"
+              >
                 Add Step{" "}
               </button>
             </div>

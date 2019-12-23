@@ -58,12 +58,14 @@ export default function(state = initialState, action) {
         ],
         editedMeal: editedMeal
       };
-    //TODO: account for step number
+
     case ADD_STEP:
       var meal = state.meals.find(meal => meal.id === action.payload.meal);
       var editedMeal = state.editedMeal;
-      meal.steps = [...meal.steps, action.payload];
-      editedMeal.steps = meal.steps;
+      //inserts new step at position step_number - 1
+      meal.steps.splice(action.payload.step_number - 1, 0, action.payload);
+      //used spread as the component did not rerender otherwise
+      editedMeal.steps = [...meal.steps];
       return {
         ...state,
         meals: [
