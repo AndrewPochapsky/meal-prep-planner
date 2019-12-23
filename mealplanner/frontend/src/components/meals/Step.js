@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { updateStep } from "../../actions/meals";
+import { updateStep, deleteStep } from "../../actions/meals";
 import { connect } from "react-redux";
 
 export class Step extends Component {
   static propTypes = {
     step: PropTypes.object.isRequired,
     isEditMeal: PropTypes.bool.isRequired,
-    updateStep: PropTypes.func.isRequired
+    updateStep: PropTypes.func.isRequired,
+    deleteStep: PropTypes.func.isRequired
   };
 
   state = {
@@ -63,12 +64,20 @@ export class Step extends Component {
             <h5 className="card-title">
               {" "}
               {step_number}. {title}
-              <button
-                onClick={() => this.setState({ isEditMode: true })}
-                className="btn btn-secondary float-right"
-              >
-                Edit
-              </button>
+              <div className="btn-group-vertical float-right">
+                <button
+                  onClick={() => this.setState({ isEditMode: true })}
+                  className="btn btn-secondary"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={this.props.deleteStep.bind(this, this.state)}
+                  className="btn btn-danger"
+                >
+                  Delete
+                </button>
+              </div>
             </h5>
             <p className="card-text">{description}</p>
           </div>
@@ -115,4 +124,4 @@ export class Step extends Component {
     }
   }
 }
-export default connect(null, { updateStep })(Step);
+export default connect(null, { updateStep, deleteStep })(Step);

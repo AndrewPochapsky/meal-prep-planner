@@ -1,14 +1,16 @@
 import React, { Component, Fragment, Container } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { updateMeal } from "../../actions/meals";
+import { updateMeal, addStep } from "../../actions/meals";
 import { toggleEditing } from "../../actions/states";
 import Step from "./Step";
 
 export class EditMeal extends Component {
   static propTypes = {
-    originalMeal: PropTypes.object.isRequired,
+    editedMeal: PropTypes.object.isRequired,
+    steps: PropTypes.array.isRequired,
     updateMeal: PropTypes.func.isRequired,
+    addStep: PropTypes.func.isRequired,
     toggleEditing: PropTypes.func.isRequired
   };
 
@@ -16,38 +18,40 @@ export class EditMeal extends Component {
     id: -1,
     name: "",
     description: "",
-    preparation_time: 0,
-    steps: []
+    preparation_time: 0
   };
 
   componentDidMount() {
-    const {
-      id,
-      name,
-      description,
-      preparation_time,
-      steps
-    } = this.props.originalMeal;
+    const { id, name, description, preparation_time } = this.props.editedMeal;
     this.setState({
       id: id,
       name: name,
       description: description,
-      preparation_time: preparation_time,
-      steps: steps
+      preparation_time: preparation_time
     });
   }
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   onSubmit = e => {
     e.preventDefault();
     this.props.updateMeal(this.state);
     this.props.toggleEditing({});
-    this.setState({ name: "", description: "", preparation_time: "" });
+  };
+
+  onAddStep = e => {
+    this.props.addStep({
+      title: "a",
+      description: "adf",
+      meal: this.state.id,
+      step_number: 5
+    });
   };
 
   render() {
-    const { name, description, preparation_time, steps } = this.state;
+    const { name, description, preparation_time } = this.state;
     return (
       <div className="container">
         <Fragment>
@@ -88,12 +92,20 @@ export class EditMeal extends Component {
           </div>
         </Fragment>
         <Fragment>
-          {this.state.steps.map(step => (
-            <Step key={step.id} step={step} isEditMeal={true} />
+          {this.props.steps.map(step => (
+            <div key={step.id}>
+              <Step step={step} isEditMeal={true} />
+              <button onClick={this.onAddStep} className="btn btn-outline-dark">
+                Add Step{" "}
+              </button>
+            </div>
           ))}
         </Fragment>
         <Fragment>
-          <button onClick={this.onSubmit} className="btn btn-success">
+          <button
+            onClick={this.onSubmit}
+            className="btn btn-success align-self-end"
+          >
             {" "}
             Save{" "}
           </button>
@@ -103,8 +115,11 @@ export class EditMeal extends Component {
   }
 }
 const mapStateToProps = state => ({
-  originalMeal: state.meals.editedMeal
+  editedMeal: state.meals.editedMeal,
+  steps: state.meals.editedMeal.steps
 });
-export default connect(mapStateToProps, { updateMeal, toggleEditing })(
-  EditMeal
-);
+export default connect(mapStateToProps, {
+  updateMeal,
+  addStep,
+  toggleEditing
+})(EditMeal);

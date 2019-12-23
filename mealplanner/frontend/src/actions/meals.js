@@ -4,7 +4,9 @@ import {
   DELETE_MEAL,
   ADD_MEAL,
   UPDATE_MEAL,
-  UPDATE_STEP
+  UPDATE_STEP,
+  DELETE_STEP,
+  ADD_STEP
 } from "./types";
 
 // GET MEALS
@@ -67,6 +69,20 @@ export const updateMeal = meal => dispatch => {
     });
 };
 
+// DELETE  STEP
+export const deleteStep = step => dispatch => {
+  axios
+    .delete(`/api/steps/${step.id}/`)
+    .then(res => {
+      dispatch({
+        type: DELETE_STEP,
+        payload: { id: step.id, meal: step.meal }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
 // UPDATE STEP
 export const updateStep = step => dispatch => {
   axios
@@ -74,6 +90,19 @@ export const updateStep = step => dispatch => {
     .then(res => {
       dispatch({
         type: UPDATE_STEP,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+// ADD STEP
+export const addStep = step => dispatch => {
+  axios
+    .post(`/api/steps/`, step)
+    .then(res => {
+      dispatch({
+        type: ADD_STEP,
         payload: res.data
       });
     })
