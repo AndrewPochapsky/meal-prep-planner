@@ -16,7 +16,6 @@ export class Step extends Component {
     id: -1,
     title: "",
     description: "",
-    step_number: "",
     meal: -1
   };
   componentDidMount() {
@@ -24,7 +23,6 @@ export class Step extends Component {
       id: this.props.step.id,
       title: this.props.step.title,
       description: this.props.step.description,
-      step_number: this.props.step.step_number,
       meal: this.props.step.meal
     });
   }
@@ -37,14 +35,16 @@ export class Step extends Component {
       id: this.state.id,
       title: this.state.title,
       description: this.state.description,
-      step_number: this.state.step_number,
+      step_number: this.props.step.step_number,
       meal: this.state.meal
     };
     this.props.updateStep(step);
   };
 
   render() {
-    const { title, step_number, description } = this.state;
+    const { title, description } = this.state;
+    // this is like this so the component property re-renders when step numbers change
+    const { step_number } = this.props.step;
     if (!this.props.isEditMeal) {
       return (
         <div className="card">

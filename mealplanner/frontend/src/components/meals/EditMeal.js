@@ -1,7 +1,7 @@
 import React, { Component, Fragment, Container } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { updateMeal, addStep } from "../../actions/meals";
+import { updateMeal, addStep, offsetSteps } from "../../actions/meals";
 import { toggleEditing } from "../../actions/states";
 import Step from "./Step";
 
@@ -11,6 +11,7 @@ export class EditMeal extends Component {
     steps: PropTypes.array.isRequired,
     updateMeal: PropTypes.func.isRequired,
     addStep: PropTypes.func.isRequired,
+    offsetSteps: PropTypes.func.isRequired,
     toggleEditing: PropTypes.func.isRequired
   };
 
@@ -42,12 +43,18 @@ export class EditMeal extends Component {
   };
 
   onAddStep = step_number => {
+    let idsToOffset = this.getStepsToIncrement(step_number);
     this.props.addStep({
       title: "a",
       description: "adf",
       meal: this.state.id,
       step_number: step_number + 1
     });
+    this.props.offsetSteps(true, idsToOffset);
+  };
+
+  getStepsToIncrement = step_number => {
+    return this.props.steps.slice(step_number).map(s => s.id);
   };
 
   render() {
@@ -119,10 +126,11 @@ export class EditMeal extends Component {
 }
 const mapStateToProps = state => ({
   editedMeal: state.meals.editedMeal,
-  steps: state.meals.editedMeal.steps
+  steps: state.meals.editedSteps
 });
 export default connect(mapStateToProps, {
   updateMeal,
   addStep,
+  offsetSteps,
   toggleEditing
 })(EditMeal);

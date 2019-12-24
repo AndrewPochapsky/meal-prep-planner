@@ -5,13 +5,15 @@ import {
   UPDATE_MEAL,
   UPDATE_STEP,
   ADD_STEP,
+  SET_STEPS,
   DELETE_STEP
 } from "../actions/types";
 import { TOGGLE_EDITING } from "../actions/types";
 
 const initialState = {
   meals: [],
-  editedMeal: {}
+  editedMeal: {},
+  editedSteps: []
 };
 
 export default function(state = initialState, action) {
@@ -41,14 +43,14 @@ export default function(state = initialState, action) {
       };
     case UPDATE_STEP:
       var meal = state.meals.find(meal => meal.id === action.payload.meal);
-      var editedMeal = state.editedMeal;
+      var editedSteps = [...state.editedSteps];
       var i = 0;
-      for (i = 0; i < editedMeal.steps.length; i++) {
-        if (editedMeal.steps[i].id === action.payload.id) {
+      for (i = 0; i < editedSteps.length; i++) {
+        if (editedSteps[i].id === action.payload.id) {
           break;
         }
       }
-      editedMeal.steps[i] = action.payload;
+      editedSteps[i] = action.payload;
       meal.steps[i] = action.payload;
       return {
         ...state,
@@ -56,37 +58,57 @@ export default function(state = initialState, action) {
           ...state.meals.filter(_meal => _meal.id !== action.payload.meal),
           meal
         ],
-        editedMeal: editedMeal
+        editedSteps: editedSteps
       };
 
     case ADD_STEP:
       var meal = state.meals.find(meal => meal.id === action.payload.meal);
-      var editedMeal = state.editedMeal;
       //inserts new step at position step_number - 1
       meal.steps.splice(action.payload.step_number - 1, 0, action.payload);
-      //used spread as the component did not rerender otherwise
-      editedMeal.steps = [...meal.steps];
       return {
         ...state,
         meals: [
           ...state.meals.filter(_meal => _meal.id !== action.payload.meal),
           meal
         ],
-        editedMeal: editedMeal
+        editedSteps: [...meal.steps]
       };
     case DELETE_STEP:
       var meal = state.meals.find(meal => meal.id === action.payload.meal);
-      var editedMeal = state.editedMeal;
       meal.steps = meal.steps.filter(step => step.id !== action.payload.id);
-      editedMeal.steps = meal.steps;
-
       return {
         ...state,
         meals: [...state.meals.filter(_meal => _meal.id !== meal.id), meal],
-        editedMeal: editedMeal
+        editedSteps: [...meal.steps]
       };
+
+    case SET_STEPS:
+      var meal = state.meals.find(m => m.id === action.payload[0].meal);
+      let map = new Map();
+      for (let step of action.payload) {
+        map.set(step.id, step);
+      }
+      for (let i = 0; i < meal.steps.length; i++) {
+        if (map.has(meal.steps[i].id)) {
+          meal.steps[i] = map.get(meal.steps[i].id);
+        }
+      }
+      return {
+        ...state,
+        meals: [...state.meals.filter(_meal => _meal.id !== meal.id), meal],
+        editedSteps: jQuery.isEmptyObject(state.editedSteps)
+          ? []
+          : [...meal.steps]
+      };
+
     case TOGGLE_EDITING:
-      return { ...state, editedMeal: action.payload };
+      return {
+        ...state,
+        editedMeal: action.payload,
+        editedSteps: jQuery.isEmptyObject(action.payload)
+          ? []
+          : [...action.payload.steps]
+      };
     default:
       return state;
   }

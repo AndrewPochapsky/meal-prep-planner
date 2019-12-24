@@ -24,7 +24,10 @@ export class Meal extends Component {
           <div className="btn-toolbar mt-auto">
             <div className="button-group">
               <button
-                onClick={this.props.toggleEditing.bind(this, this.props.meal)}
+                onClick={this.props.toggleEditing.bind(
+                  this,
+                  JSON.parse(JSON.stringify(this.props.meal))
+                )}
                 className="btn btn-primary btn-sm"
               >
                 Edit

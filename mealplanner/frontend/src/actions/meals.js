@@ -6,6 +6,7 @@ import {
   UPDATE_MEAL,
   UPDATE_STEP,
   DELETE_STEP,
+  SET_STEPS,
   ADD_STEP
 } from "./types";
 
@@ -108,4 +109,19 @@ export const addStep = step => dispatch => {
       });
     })
     .catch(err => console.log(err));
+};
+
+// OFFSET STEPS
+export const offsetSteps = (increment, ids) => dispatch => {
+  if (ids.length > 0) {
+    axios
+      .post("/api/steps/offset_steps/", { increment: increment, steps: ids })
+      .then(res => {
+        dispatch({
+          type: SET_STEPS,
+          payload: res.data
+        });
+      })
+      .catch(err => console.log(err));
+  }
 };
