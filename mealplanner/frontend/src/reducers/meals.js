@@ -34,12 +34,12 @@ export default function(state = initialState, action) {
         meals: [...state.meals, action.payload]
       };
     case UPDATE_MEAL:
+      var index = state.meals.findIndex(m => m.id === action.payload.id);
+      var meals = [...state.meals];
+      meals[index] = action.payload;
       return {
         ...state,
-        meals: [
-          ...state.meals.filter(meal => meal.id !== action.payload.id),
-          action.payload
-        ]
+        meals: meals
       };
     case UPDATE_STEP:
       var meal = state.meals.find(meal => meal.id === action.payload.meal);
@@ -62,15 +62,16 @@ export default function(state = initialState, action) {
       };
 
     case ADD_STEP:
-      var meal = state.meals.find(meal => meal.id === action.payload.meal);
+      var index = state.meals.findIndex(m => m.id === action.payload.meal);
+      var meal = state.meals[index];
       //inserts new step at position step_number - 1
       meal.steps.splice(action.payload.step_number - 1, 0, action.payload);
+
+      var meals = [...state.meals];
+      meals[index] = meal;
       return {
         ...state,
-        meals: [
-          ...state.meals.filter(_meal => _meal.id !== action.payload.meal),
-          meal
-        ],
+        meals: meals,
         editedSteps: jQuery.isEmptyObject(state.editedSteps)
           ? []
           : [...meal.steps]
@@ -85,7 +86,8 @@ export default function(state = initialState, action) {
       };
 
     case SET_STEPS:
-      var meal = state.meals.find(m => m.id === action.payload[0].meal);
+      var index = state.meals.findIndex(m => m.id === action.payload[0].meal);
+      var meal = state.meals[index];
       let map = new Map();
       for (let step of action.payload) {
         map.set(step.id, step);
@@ -95,9 +97,11 @@ export default function(state = initialState, action) {
           meal.steps[i] = map.get(meal.steps[i].id);
         }
       }
+      var meals = [...state.meals];
+      meals[index] = meal;
       return {
         ...state,
-        meals: [...state.meals.filter(_meal => _meal.id !== meal.id), meal],
+        meals: meals,
         editedSteps: jQuery.isEmptyObject(state.editedSteps)
           ? []
           : [...meal.steps]

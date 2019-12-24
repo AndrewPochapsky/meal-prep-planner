@@ -61,14 +61,14 @@ export class Step extends Component {
       this.props.steps.length == 1 ? (
         <button
           onClick={() => this.onDeleteStep(step_number)}
-          className="btn btn-danger invisible"
+          className="btn btn-outline-danger invisible"
         >
           Delete
         </button>
       ) : (
         <button
           onClick={() => this.onDeleteStep(step_number)}
-          className="btn btn-danger"
+          className="btn btn-outline-danger"
         >
           Delete
         </button>
@@ -96,7 +96,7 @@ export class Step extends Component {
               <div className="btn-group-vertical float-right">
                 <button
                   onClick={() => this.setState({ isEditMode: true })}
-                  className="btn btn-secondary"
+                  className="btn btn-outline-secondary"
                 >
                   Edit
                 </button>
