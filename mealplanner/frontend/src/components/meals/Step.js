@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { updateStep, deleteStep } from "../../actions/meals";
+import { updateStep, deleteStep, offsetSteps } from "../../actions/meals";
 import { connect } from "react-redux";
 
 export class Step extends Component {
   static propTypes = {
     step: PropTypes.object.isRequired,
+    steps: PropTypes.array.isRequired,
     isEditMeal: PropTypes.bool.isRequired,
     updateStep: PropTypes.func.isRequired,
-    deleteStep: PropTypes.func.isRequired
+    deleteStep: PropTypes.func.isRequired,
+    offsetSteps: PropTypes.func.isRequired
   };
 
   state = {
@@ -41,6 +43,15 @@ export class Step extends Component {
     this.props.updateStep(step);
   };
 
+  onDeleteStep = step_number => {
+    let idsToOffset = this.getStepsToDecrement(step_number);
+    this.props.deleteStep(this.state);
+    this.props.offsetSteps(false, idsToOffset);
+  };
+
+  getStepsToDecrement = step_number => {
+    return this.props.steps.slice(step_number).map(s => s.id);
+  };
   render() {
     const { title, description } = this.state;
     // this is like this so the component property re-renders when step numbers change
@@ -72,7 +83,7 @@ export class Step extends Component {
                   Edit
                 </button>
                 <button
-                  onClick={this.props.deleteStep.bind(this, this.state)}
+                  onClick={() => this.onDeleteStep(step_number)}
                   className="btn btn-danger"
                 >
                   Delete
@@ -124,4 +135,12 @@ export class Step extends Component {
     }
   }
 }
-export default connect(null, { updateStep, deleteStep })(Step);
+
+const mapStateToProps = state => ({
+  steps: state.meals.editedSteps
+});
+export default connect(mapStateToProps, {
+  updateStep,
+  deleteStep,
+  offsetSteps
+})(Step);
