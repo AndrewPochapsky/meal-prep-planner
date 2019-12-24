@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from "react";
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Form from "./Form";
 import Meals from "./Meals";
 import EditMeal from "./EditMeal";
 
-export class Dashboard extends Component {
+export class EditDashboard extends Component {
   static propTypes = {
-    isEditing: PropType.bool.isRequired
+    isEditing: PropTypes.bool.isRequired
   };
   render() {
     if (!this.props.isEditing) {
@@ -31,4 +31,4 @@ const mapStateToProps = state => ({
   isEditing: state.states.isEditing
 });
 
-export default connect(mapStateToProps, {})(Dashboard);
+export default connect(mapStateToProps, {})(EditDashboard);

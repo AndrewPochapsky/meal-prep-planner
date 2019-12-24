@@ -6,9 +6,9 @@ import {
   UPDATE_STEP,
   ADD_STEP,
   SET_STEPS,
-  DELETE_STEP
+  DELETE_STEP,
+  TOGGLE_EDITING
 } from "../actions/types";
-import { TOGGLE_EDITING } from "../actions/types";
 
 const initialState = {
   meals: [],

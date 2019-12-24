@@ -7,3 +7,9 @@ export const SET_STEPS = "SET_STEPS";
 export const DELETE_STEP = "DELETE_STEP";
 export const ADD_STEP = "ADD_STEP";
 export const TOGGLE_EDITING = "TOGGLE_EDITING";
+
+export const StateEnum = Object.freeze({
+  MAIN: "MAIN",
+  EDIT: "EDIT",
+  EDITMEAL: "EDITMEAL"
+});
