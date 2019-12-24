@@ -56,6 +56,24 @@ export class Step extends Component {
     const { title, description } = this.state;
     // this is like this so the component property re-renders when step numbers change
     const { step_number } = this.props.step;
+    // make delete button invisible if there is only one step
+    let deleteButton =
+      this.props.steps.length == 1 ? (
+        <button
+          onClick={() => this.onDeleteStep(step_number)}
+          className="btn btn-danger invisible"
+        >
+          Delete
+        </button>
+      ) : (
+        <button
+          onClick={() => this.onDeleteStep(step_number)}
+          className="btn btn-danger"
+        >
+          Delete
+        </button>
+      );
+
     if (!this.props.isEditMeal) {
       return (
         <div className="card">
@@ -82,12 +100,7 @@ export class Step extends Component {
                 >
                   Edit
                 </button>
-                <button
-                  onClick={() => this.onDeleteStep(step_number)}
-                  className="btn btn-danger"
-                >
-                  Delete
-                </button>
+                {deleteButton}
               </div>
             </h5>
             <p className="card-text">{description}</p>
