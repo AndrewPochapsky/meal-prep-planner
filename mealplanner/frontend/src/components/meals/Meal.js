@@ -8,10 +8,36 @@ export class Meal extends Component {
   static propTypes = {
     meal: PropTypes.object.isRequired,
     deleteMeal: PropTypes.func.isRequired,
-    toggleEditing: PropTypes.func.isRequired
+    toggleEditing: PropTypes.func.isRequired,
+    displayButtons: PropTypes.bool.isRequired
   };
 
   render() {
+    let buttonToolbar = this.props.displayButtons ? (
+      <div className="btn-toolbar mt-auto">
+        <div className="button-group">
+          <button
+            onClick={this.props.toggleEditing.bind(
+              this,
+              JSON.parse(JSON.stringify(this.props.meal))
+            )}
+            className="btn btn-primary btn-sm"
+          >
+            Edit
+          </button>
+        </div>
+        <div className="button-group">
+          <button
+            onClick={this.props.deleteMeal.bind(this, id)}
+            className="btn btn-danger btn-sm"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ) : (
+      <div />
+    );
     const { id, name, description, preparation_time, steps } = this.props.meal;
     return (
       <div className="card" style={{ width: "25%" }}>
@@ -21,27 +47,7 @@ export class Meal extends Component {
             {preparation_time} minutes
           </h6>
           <p className="card-text">{description}</p>
-          <div className="btn-toolbar mt-auto">
-            <div className="button-group">
-              <button
-                onClick={this.props.toggleEditing.bind(
-                  this,
-                  JSON.parse(JSON.stringify(this.props.meal))
-                )}
-                className="btn btn-primary btn-sm"
-              >
-                Edit
-              </button>
-            </div>
-            <div className="button-group">
-              <button
-                onClick={this.props.deleteMeal.bind(this, id)}
-                className="btn btn-danger btn-sm"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
+          {buttonToolbar}
         </div>
       </div>
     );

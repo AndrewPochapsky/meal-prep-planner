@@ -8,7 +8,8 @@ export class Meals extends Component {
   static propTypes = {
     meals: PropTypes.array.isRequired,
     mealsLoaded: PropTypes.bool.isRequired,
-    getMeals: PropTypes.func.isRequired
+    getMeals: PropTypes.func.isRequired,
+    isEditMode: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -23,7 +24,11 @@ export class Meals extends Component {
         <h2>Meals</h2>
         <div className="row container">
           {this.props.meals.map(meal => (
-            <Meal key={meal.id} meal={meal} />
+            <Meal
+              key={meal.id}
+              meal={meal}
+              displayButtons={this.props.isEditMode}
+            />
           ))}
         </div>
       </Fragment>

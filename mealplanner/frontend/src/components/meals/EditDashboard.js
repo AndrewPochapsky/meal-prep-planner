@@ -14,7 +14,7 @@ export class EditDashboard extends Component {
       return (
         <Fragment>
           <Form />
-          <Meals />
+          <Meals isEditMode={true} />
         </Fragment>
       );
     } else {
