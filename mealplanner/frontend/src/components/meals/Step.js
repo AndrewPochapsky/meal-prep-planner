@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { updateStep, deleteStep, offsetSteps } from "../../actions/meals";
+import { updateStep, deleteStep, offsetSteps } from "../../actions/steps";
 import { connect } from "react-redux";
 
 export class Step extends Component {

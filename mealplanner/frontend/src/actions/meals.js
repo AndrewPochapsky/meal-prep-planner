@@ -1,14 +1,5 @@
 import axios from "axios";
-import {
-  GET_MEALS,
-  DELETE_MEAL,
-  ADD_MEAL,
-  UPDATE_MEAL,
-  UPDATE_STEP,
-  DELETE_STEP,
-  SET_STEPS,
-  ADD_STEP
-} from "./types";
+import { GET_MEALS, DELETE_MEAL, ADD_MEAL, UPDATE_MEAL } from "./types";
 
 // GET MEALS
 export const getMeals = () => dispatch => {
@@ -68,60 +59,4 @@ export const updateMeal = meal => dispatch => {
     .catch(err => {
       console.log(err);
     });
-};
-
-// DELETE  STEP
-export const deleteStep = step => dispatch => {
-  axios
-    .delete(`/api/steps/${step.id}/`)
-    .then(res => {
-      dispatch({
-        type: DELETE_STEP,
-        payload: { id: step.id, meal: step.meal }
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
-// UPDATE STEP
-export const updateStep = step => dispatch => {
-  axios
-    .put(`/api/steps/${step.id}/`, step)
-    .then(res => {
-      dispatch({
-        type: UPDATE_STEP,
-        payload: res.data
-      });
-    })
-    .catch(err => console.log(err));
-};
-
-// ADD STEP
-export const addStep = step => dispatch => {
-  axios
-    .post(`/api/steps/`, step)
-    .then(res => {
-      dispatch({
-        type: ADD_STEP,
-        payload: res.data
-      });
-    })
-    .catch(err => console.log(err));
-};
-
-// OFFSET STEPS
-export const offsetSteps = (increment, ids) => dispatch => {
-  if (ids.length > 0) {
-    axios
-      .post("/api/steps/offset_steps/", { increment: increment, steps: ids })
-      .then(res => {
-        dispatch({
-          type: SET_STEPS,
-          payload: res.data
-        });
-      })
-      .catch(err => console.log(err));
-  }
 };

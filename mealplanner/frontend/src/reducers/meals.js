@@ -71,7 +71,9 @@ export default function(state = initialState, action) {
           ...state.meals.filter(_meal => _meal.id !== action.payload.meal),
           meal
         ],
-        editedSteps: [...meal.steps]
+        editedSteps: jQuery.isEmptyObject(state.editedSteps)
+          ? []
+          : [...meal.steps]
       };
     case DELETE_STEP:
       var meal = state.meals.find(meal => meal.id === action.payload.meal);

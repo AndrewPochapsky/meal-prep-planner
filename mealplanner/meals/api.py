@@ -13,6 +13,23 @@ class MealViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = MealSerializer
 
+    #Override this in order to create a blank step by default
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        meal = Meal.objects.get(pk=serializer.data["id"])
+        step = Step.objects.create(title="", description="", step_number=1, meal=meal)
+        step.save()
+
+        meal = Meal.objects.get(pk=serializer.data["id"])
+        headers = self.get_success_headers(serializer.data)
+        return Response(MealSerializer(meal).data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
 class StepViewSet(viewsets.ModelViewSet):
     queryset = Step.objects.all()
     permission_classes = [

@@ -1,7 +1,8 @@
 import React, { Component, Fragment, Container } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { updateMeal, addStep, offsetSteps } from "../../actions/meals";
+import { updateMeal } from "../../actions/meals";
+import { addStep, offsetSteps } from "../../actions/steps";
 import { toggleEditing } from "../../actions/states";
 import Step from "./Step";
 
@@ -45,8 +46,8 @@ export class EditMeal extends Component {
   onAddStep = step_number => {
     let idsToOffset = this.getStepsToIncrement(step_number);
     this.props.addStep({
-      title: "a",
-      description: "adf",
+      title: "",
+      description: "",
       meal: this.state.id,
       step_number: step_number + 1
     });

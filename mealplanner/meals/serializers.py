@@ -10,7 +10,6 @@ class StepSerializer(serializers.ModelSerializer):
 
 # Meal Serializer
 class MealSerializer(serializers.ModelSerializer):
-    #steps  = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     steps = StepSerializer(many=True, read_only=True)
     class Meta:
         model = Meal
