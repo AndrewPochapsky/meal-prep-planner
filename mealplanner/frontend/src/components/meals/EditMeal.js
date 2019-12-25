@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { updateMeal } from "../../actions/meals";
 import { addStep, offsetSteps } from "../../actions/steps";
 import { toggleEditing } from "../../actions/states";
+import { Link } from "react-router-dom";
 import Step from "./Step";
 
 export class EditMeal extends Component {
@@ -35,12 +36,6 @@ export class EditMeal extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    this.props.updateMeal(this.state);
-    this.props.toggleEditing({});
   };
 
   onAddStep = step_number => {
@@ -113,13 +108,14 @@ export class EditMeal extends Component {
           ))}
         </Fragment>
         <Fragment>
-          <button
-            onClick={this.onSubmit}
+          <Link
+            to="/edit"
+            onClick={() => this.props.updateMeal(this.state)}
             className="btn btn-success align-self-end"
           >
             {" "}
             Save{" "}
-          </button>
+          </Link>
         </Fragment>
       </div>
     );

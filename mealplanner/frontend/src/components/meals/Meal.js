@@ -14,10 +14,12 @@ export class Meal extends Component {
   };
 
   render() {
+    const { id, name, description, preparation_time, steps } = this.props.meal;
     let buttonToolbar = this.props.displayButtons ? (
       <div className="btn-toolbar mt-auto">
         <div className="button-group">
-          <button
+          <Link
+            to="/editMeal"
             onClick={this.props.toggleEditing.bind(
               this,
               JSON.parse(JSON.stringify(this.props.meal))
@@ -25,7 +27,7 @@ export class Meal extends Component {
             className="btn btn-primary btn-sm"
           >
             Edit
-          </button>
+          </Link>
         </div>
         <div className="button-group">
           <button
@@ -41,9 +43,7 @@ export class Meal extends Component {
         <Link
           to={{
             pathname: "/view",
-            state: {
-              meal: this.props.meal
-            }
+            meal: this.props.meal
           }}
           className="btn btn-primary btn-sm"
         >
@@ -51,7 +51,6 @@ export class Meal extends Component {
         </Link>
       </div>
     );
-    const { id, name, description, preparation_time, steps } = this.props.meal;
     return (
       <div className="card" style={{ width: "25%" }}>
         <div className="card-body d-flex flex-column">

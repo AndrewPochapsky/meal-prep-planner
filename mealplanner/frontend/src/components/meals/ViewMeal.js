@@ -7,9 +7,15 @@ export class ViewMeal extends Component {
     location: PropTypes.object.isRequired
   };
   render() {
+    const {
+      name,
+      description,
+      preparation_time,
+      steps
+    } = this.props.location.meal;
     return (
       <div>
-        <h1> Title </h1>
+        <h1> {name} </h1>
       </div>
     );
   }
