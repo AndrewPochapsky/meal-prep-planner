@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { deleteMeal } from "../../actions/meals";
 import { toggleEditing } from "../../actions/states";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export class Meal extends Component {
@@ -36,7 +37,19 @@ export class Meal extends Component {
         </div>
       </div>
     ) : (
-      <div />
+      <div className="button-group">
+        <Link
+          to={{
+            pathname: "/view",
+            state: {
+              meal: this.props.meal
+            }
+          }}
+          className="btn btn-primary btn-sm"
+        >
+          View
+        </Link>
+      </div>
     );
     const { id, name, description, preparation_time, steps } = this.props.meal;
     return (

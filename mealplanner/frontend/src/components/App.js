@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import Header from "./layout/Header";
 import MainDashboard from "./meals/MainDashboard";
 import EditDashboard from "./meals/EditDashboard";
+import ViewMeal from "./meals/ViewMeal";
 import { Provider } from "react-redux";
 import store from "../store";
 
@@ -17,6 +18,7 @@ class App extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={MainDashboard} />
+                <Route exact path="/view" component={ViewMeal} />
                 <Route exact path="/edit" component={EditDashboard} />
               </Switch>
             </div>
