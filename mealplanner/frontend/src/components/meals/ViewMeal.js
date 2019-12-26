@@ -26,6 +26,7 @@ export class ViewMeal extends Component {
               <p className="card-text">{description}</p>
             </div>
           </div>
+          <hr />
         </Fragment>
         <Fragment>
           {steps.map(step => (
