@@ -7,11 +7,13 @@ import json
 
 # Meal viewset
 class MealViewSet(viewsets.ModelViewSet):
-    queryset = Meal.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
     serializer_class = MealSerializer
+
+    def get_queryset(self):
+        return self.request.user.meals.all()
 
     #Override this in order to create a blank step by default
     def create(self, request, *args, **kwargs):
@@ -28,14 +30,17 @@ class MealViewSet(viewsets.ModelViewSet):
         return Response(MealSerializer(meal).data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(owner=self.request.user)
 
 class StepViewSet(viewsets.ModelViewSet):
-    queryset = Step.objects.all()
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
+
     serializer_class = StepSerializer
+
+    def get_queryset(self):
+        return self.request.user.steps.all()
 
     @action(detail=False, methods = ['post'])
     def offset_steps(self, request):
