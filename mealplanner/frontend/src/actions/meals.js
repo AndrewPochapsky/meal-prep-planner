@@ -1,10 +1,11 @@
 import axios from "axios";
 import { GET_MEALS, DELETE_MEAL, ADD_MEAL, UPDATE_MEAL } from "./types";
+import { tokenConfig } from "./auth";
 
 // GET MEALS
-export const getMeals = () => dispatch => {
+export const getMeals = () => (dispatch, getState) => {
   axios
-    .get("/api/meals/")
+    .get("/api/meals/", tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_MEALS,
@@ -17,9 +18,9 @@ export const getMeals = () => dispatch => {
 };
 
 // DELETE  MEAL
-export const deleteMeal = id => dispatch => {
+export const deleteMeal = id => (dispatch, getState) => {
   axios
-    .delete(`/api/meals/${id}/`)
+    .delete(`/api/meals/${id}/`, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: DELETE_MEAL,
@@ -32,9 +33,9 @@ export const deleteMeal = id => dispatch => {
 };
 
 // ADD MEAL
-export const addMeal = meal => dispatch => {
+export const addMeal = meal => (dispatch, getState) => {
   axios
-    .post("/api/meals/", meal)
+    .post("/api/meals/", meal, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: ADD_MEAL,
@@ -47,9 +48,9 @@ export const addMeal = meal => dispatch => {
 };
 
 // UPDATE  MEAL
-export const updateMeal = meal => dispatch => {
+export const updateMeal = meal => (dispatch, getState) => {
   axios
-    .put(`/api/meals/${meal.id}/`, meal)
+    .put(`/api/meals/${meal.id}/`, meal, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: UPDATE_MEAL,

@@ -22,7 +22,7 @@ class MealViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
 
         meal = Meal.objects.get(pk=serializer.data["id"])
-        step = Step.objects.create(title="", description="", step_number=1, meal=meal)
+        step = Step.objects.create(title="", description="", step_number=1, meal=meal, owner=request.user)
         step.save()
 
         meal = Meal.objects.get(pk=serializer.data["id"])
@@ -57,3 +57,7 @@ class StepViewSet(viewsets.ModelViewSet):
             step.save()
             response_body.append(StepSerializer(step).data)
         return Response(response_body, status=status.HTTP_200_OK)
+
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
