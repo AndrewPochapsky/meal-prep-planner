@@ -14,44 +14,58 @@ export class Header extends Component {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
-      <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li className="nav-item">
-          <Link to="/" className="nav-link">
-            Main
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/edit" className="nav-link">
-            Edit
-          </Link>
-        </li>
-        <span className="navbar-text mr-3">
-          <strong>{user ? `Welcome ${user.username}` : ""}</strong>
-        </span>
-        <li className="nav-item">
-          <button
-            onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
-          >
-            Logout
-          </button>
-        </li>
-      </ul>
+      <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a className="navbar-brand" href="#">
+          Meal Prep Planner
+        </a>
+
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link to="/" className="nav-link">
+              Main
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/edit" className="nav-link">
+              Edit
+            </Link>
+          </li>
+        </ul>
+        <ul className="navbar-nav ml-auto">
+          <span className="navbar-text mr-3">
+            <strong>{user ? `Welcome ${user.username}` : ""}</strong>
+          </span>
+          <li className="nav-item ">
+            <button
+              onClick={this.props.logout}
+              className="nav-link btn btn-info btn-sm text-light"
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
+      </div>
     );
 
     const guestLinks = (
-      <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li className="nav-item">
-          <Link to="/register" className="nav-link">
-            Register
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/login" className="nav-link">
-            Login
-          </Link>
-        </li>
-      </ul>
+      <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a className="navbar-brand" href="#">
+          Meal Prep Planner
+        </a>
+
+        <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+          <li className="nav-item">
+            <Link to="/register" className="nav-link">
+              Register
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+          </li>
+        </ul>
+      </div>
     );
 
     return (
@@ -67,12 +81,7 @@ export class Header extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a className="navbar-brand" href="#">
-            Meal Prep Planner
-          </a>
-          {isAuthenticated ? authLinks : guestLinks}
-        </div>
+        {isAuthenticated ? authLinks : guestLinks}{" "}
       </nav>
     );
   }
