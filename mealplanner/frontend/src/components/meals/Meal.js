@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { deleteMeal } from "../../actions/meals";
 import { toggleEditing } from "../../actions/states";
+import { getFormattedPrepTime } from "../../lib/meal";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -51,13 +52,12 @@ export class Meal extends Component {
         </Link>
       </div>
     );
+    let timeText = getFormattedPrepTime(preparation_time);
     return (
       <div className="card" style={{ width: "25%" }}>
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">{name}</h5>
-          <h6 className="card-subtitle mb-2 text-muted">
-            {preparation_time} minutes
-          </h6>
+          <h6 className="card-subtitle mb-2 text-muted">{timeText}</h6>
           <p className="card-text">{description}</p>
           {buttonToolbar}
         </div>

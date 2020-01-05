@@ -5,7 +5,9 @@ export class MainDashboard extends Component {
   render() {
     return (
       <Fragment>
-        <Meals isEditMode={false} />
+        <Fragment>
+          <Meals isEditMode={false} />
+        </Fragment>
       </Fragment>
     );
   }
