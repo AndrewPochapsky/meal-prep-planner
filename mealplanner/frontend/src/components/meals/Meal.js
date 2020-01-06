@@ -57,8 +57,16 @@ export class Meal extends Component {
       <div className="card" style={{ width: "25%" }}>
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">{name}</h5>
-          <img src="../static/frontend/open-iconic/svg/clock.svg" alt="clock" />
-          <h6 className="card-subtitle mb-2 text-muted">{timeText}</h6>
+          <h6 className="card-subtitle mb-2 text-muted">
+            <img
+              src="../static/frontend/open-iconic/svg/clock.svg"
+              className="mr-2"
+              alt="clock"
+              width="15"
+              height="15"
+            />
+            {timeText}
+          </h6>
           <p className="card-text">{description}</p>
           {buttonToolbar}
         </div>
